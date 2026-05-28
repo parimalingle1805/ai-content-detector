@@ -24,6 +24,13 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  synthid-scanner:
+    build: ./microservices/synthid-scanner
+    container_name: synthid_scanner
+    restart: always
+    ports:
+      - "8000:8000"
+
 volumes:
   postgres_data:
   mongo_data:
