@@ -4,3 +4,4 @@ dist
 .idea/
 
 /generated/prisma
+/ai-scanner-key.pem
