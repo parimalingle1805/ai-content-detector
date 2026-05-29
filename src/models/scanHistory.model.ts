@@ -1,17 +1,28 @@
-import mongoose, { Document, Schema } from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IScanHistory extends Document {
   userId: string;
-  contentType: string;
-  result: Record<string, any>;
+  scanType: string;
+  contentReference?: string;
+  thumbnailUrl?: string;
+  originalText?: string;
+  resultData: mongoose.Schema.Types.Mixed;
   createdAt: Date;
+  updatedAt: Date;
 }
 
-const ScanHistorySchema: Schema = new Schema({
-  userId: { type: String, required: true },
-  contentType: { type: String, required: true },
-  result: { type: Schema.Types.Mixed, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
+const scanHistorySchema = new Schema(
+  {
+    userId: { type: String, required: true },
+    scanType: { type: String, required: true, enum: ['text', 'image'] },
+    contentReference: { type: String },
+    thumbnailUrl: { type: String },
+    originalText: { type: String },
+    resultData: { type: Schema.Types.Mixed, required: true },
+  },
+  { timestamps: true }
+);
 
-export const ScanHistory = mongoose.model<IScanHistory>('ScanHistory', ScanHistorySchema);
+scanHistorySchema.index({ userId: 1, createdAt: -1 });
+
+export const ScanHistory = mongoose.model<IScanHistory>('ScanHistory', scanHistorySchema);

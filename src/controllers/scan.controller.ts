@@ -3,6 +3,7 @@ import multer from 'multer';
 import { AuthRequest } from '../middlewares/auth.middleware';
 import { scanTextForWatermark } from '../services/textScanner.service';
 import { scanImageForC2PA } from '../services/imageScanner.service';
+import { uploadImageToS3 } from '../services/s3.service';
 import { ScanHistory } from '../models/scanHistory.model';
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -18,6 +19,10 @@ export const scanText = async (req: AuthRequest, res: Response) => {
       return res.status(400).json({ error: 'Text payload is required and must be a string' });
     }
 
+    if (text.length < 20) {
+      return res.status(400).json({ error: 'Text is too short for deep statistical analysis. Minimum 20 characters required.' });
+    }
+
     if (!userId) {
       return res.status(401).json({ error: 'Unauthorized' });
     }
@@ -26,8 +31,10 @@ export const scanText = async (req: AuthRequest, res: Response) => {
 
     const historyRecord = new ScanHistory({
       userId,
-      contentType: 'text',
-      result: scanResult,
+      scanType: 'text',
+      contentReference: text.substring(0, 50) + (text.length > 50 ? '...' : ''),
+      originalText: text,
+      resultData: scanResult,
     });
 
     await historyRecord.save();
@@ -58,21 +65,57 @@ export const scanImage = async (req: AuthRequest, res: Response) => {
 
     const c2paResult = await scanImageForC2PA(file.buffer, file.mimetype);
 
+    let thumbnailUrl = undefined;
+    try {
+      thumbnailUrl = await uploadImageToS3(file.buffer, file.mimetype);
+    } catch (uploadError: any) {
+      console.error('S3 Upload failed, proceeding without thumbnail:', uploadError.message);
+    }
+
     const historyRecord = new ScanHistory({
       userId,
-      contentType: 'image',
-      result: c2paResult,
+      scanType: 'image',
+      contentReference: file.originalname || 'image_upload',
+      thumbnailUrl,
+      resultData: c2paResult,
     });
 
     await historyRecord.save();
 
     res.status(200).json({
       message: 'Scan completed',
-      result: c2paResult,
+      result: {
+        ...c2paResult,
+        thumbnailUrl
+      },
       historyId: historyRecord._id
     });
   } catch (error: any) {
     console.error('Image scanning error:', error.message);
     res.status(500).json({ error: 'Failed to scan image' });
+  }
+};
+
+export const getHistory = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.userId;
+    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+    const history = await ScanHistory.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json(history);
+  } catch (error: any) {
+    console.error('Fetch history error:', error.message);
+    res.status(500).json({ error: 'Failed to fetch history' });
+  }
+};
+
+export const deleteHistory = async (req: AuthRequest, res: Response) => {
+  try {
+    const userId = req.userId;
+    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+    await ScanHistory.findOneAndDelete({ _id: req.params.id, userId });
+    res.status(200).json({ message: 'History record deleted' });
+  } catch (error: any) {
+    console.error('Delete history error:', error.message);
+    res.status(500).json({ error: 'Failed to delete history' });
   }
 };

@@ -12,6 +12,7 @@ RUN pip install jax jaxlib flax
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY main.py .
+COPY patterns.json .
 
 EXPOSE 8000
 
