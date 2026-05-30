@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import { useAuth } from '../context/AuthContext';
 import { Shield, Key, AlertCircle, CheckCircle } from 'lucide-react';
 import api from '../services/api';
@@ -29,11 +29,9 @@ const Account: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#020617] text-white font-sans overflow-hidden">
-      <Sidebar />
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto px-10 py-16">
-          <div className="flex items-center gap-4 mb-8">
+    <Layout>
+      <div className="max-w-4xl mx-auto px-4 md:px-10 py-8 md:py-16">
+        <div className="flex items-center gap-4 mb-8">
             <div className="p-3 bg-lime-500/10 text-lime-400 rounded-xl">
               <Shield className="w-8 h-8" />
             </div>
@@ -101,9 +99,8 @@ const Account: React.FC = () => {
               </button>
             </form>
           </div>
-        </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

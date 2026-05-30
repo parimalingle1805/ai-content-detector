@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import Scanner from '../components/Scanner';
 import ResultDisplay from '../components/ResultDisplay';
 import { AnimatePresence } from 'framer-motion';
@@ -22,12 +22,9 @@ const Dashboard: React.FC = () => {
   }, [location.state, setResult]);
 
   return (
-    <div className="flex h-screen bg-[#020617] text-white font-sans overflow-hidden">
-      <Sidebar />
-      
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-6xl mx-auto px-10 py-16">
-          <header className="mb-16">
+    <Layout>
+      <div className="max-w-6xl mx-auto px-4 md:px-10 py-8 md:py-16">
+        <header className="mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">
               Content Verification
             </h2>
@@ -49,9 +46,8 @@ const Dashboard: React.FC = () => {
               {result && <ResultDisplay result={result} />}
             </AnimatePresence>
           </div>
-        </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 };
 

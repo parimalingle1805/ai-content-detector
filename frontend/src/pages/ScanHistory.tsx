@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Sidebar from '../components/Sidebar';
+import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { History, Trash2, Clock, AlertCircle } from 'lucide-react';
 import api from '../services/api';
@@ -46,11 +46,9 @@ const ScanHistory: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-[#020617] text-white font-sans overflow-hidden">
-      <Sidebar />
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-5xl mx-auto px-10 py-16">
-          <div className="flex items-center gap-4 mb-10">
+    <Layout>
+      <div className="max-w-5xl mx-auto px-4 md:px-10 py-8 md:py-16">
+        <div className="flex items-center gap-4 mb-10">
             <div className="p-3 bg-lime-500/10 text-lime-400 rounded-xl">
               <History className="w-8 h-8" />
             </div>
@@ -155,9 +153,8 @@ const ScanHistory: React.FC = () => {
               })}
             </div>
           )}
-        </div>
-      </main>
-    </div>
+      </div>
+    </Layout>
   );
 };
 
