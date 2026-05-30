@@ -111,7 +111,7 @@ const ScanHistory: React.FC = () => {
                     onClick={() => navigate('/', { state: { historicalResult: { ...scan.resultData, thumbnailUrl: scan.thumbnailUrl }, historicalType: scan.scanType, historicalText: scan.originalText } })}
                     className="bg-slate-800/50 border border-slate-700 p-6 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-slate-800/50 transition-colors"
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
                       {scan.thumbnailUrl ? (
                         <img src={scan.thumbnailUrl} alt="Scan thumbnail" className="w-12 h-12 rounded object-cover flex-shrink-0 border border-slate-700" />
                       ) : (
@@ -119,23 +119,23 @@ const ScanHistory: React.FC = () => {
                           {scan.scanType === 'text' ? 'TXT' : 'IMG'}
                         </div>
                       )}
-                      <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-3">
+                      <div className="flex flex-col gap-2 flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
                           <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                             scan.scanType === 'text' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'
                           }`}>
                             {scan.scanType}
                           </span>
-                          <span className="text-sm text-slate-400 border-r border-slate-700 pr-3">
+                          <span className="text-sm text-slate-400 border-r border-slate-700 pr-2">
                             {new Date(scan.createdAt).toLocaleString()}
                           </span>
                           {activeBadges.map((badge, index) => (
-                            <span key={index} className={`px-2 py-1 rounded-lg text-xs font-medium ${badge.className}`}>
+                            <span key={index} className={`px-2 py-1 rounded-lg text-xs font-medium whitespace-nowrap ${badge.className}`}>
                               {badge.label}
                             </span>
                           ))}
                         </div>
-                        <p className="text-white font-medium truncate max-w-lg">
+                        <p className="text-white font-medium truncate w-full">
                           {scan.contentReference || 'No reference available'}
                         </p>
                       </div>
