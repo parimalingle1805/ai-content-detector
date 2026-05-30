@@ -90,7 +90,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result }) => {
                 <Icon className="w-8 h-8" />
               </div>
               
-              <div className="flex-1">
+              <div className="flex-1 min-w-0">
                 <h2 className="text-2xl font-bold text-white mb-2">
                   {title}
                 </h2>
@@ -98,7 +98,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result }) => {
                   {subtext}
                 </p>
 
-                <div className="bg-slate-900 rounded-xl p-5 border border-slate-800 space-y-4">
+                <div className="w-full bg-slate-900 rounded-xl p-3 md:p-5 border border-slate-800 space-y-4 overflow-hidden">
                   {isImage ? (
                     <>
                       <div className="flex justify-between items-center">
@@ -111,14 +111,14 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result }) => {
                       {result.exifDetails && (result.exifDetails.iso || result.exifDetails.focalLength || result.exifDetails.resolution) && (
                         <div className="pt-4 border-t border-slate-800">
                           <span className="text-slate-400 font-medium block mb-3">Camera Details</span>
-                          <div className="grid grid-cols-3 gap-4">
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
                             {result.exifDetails.resolution && (
                               <div className="flex flex-col gap-1 p-3 bg-slate-800/50 rounded-lg border border-slate-700/50">
                                 <div className="flex items-center gap-2 text-slate-400 text-xs">
                                   <Maximize className="w-3 h-3" />
                                   <span>Resolution</span>
                                 </div>
-                                <span className="text-white text-sm font-medium">{result.exifDetails.resolution}</span>
+                                <span className="text-white text-sm font-medium break-words">{result.exifDetails.resolution}</span>
                               </div>
                             )}
                             {result.exifDetails.focalLength && (
@@ -127,7 +127,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result }) => {
                                   <Camera className="w-3 h-3" />
                                   <span>Focal Length</span>
                                 </div>
-                                <span className="text-white text-sm font-medium">{result.exifDetails.focalLength}</span>
+                                <span className="text-white text-sm font-medium break-words">{result.exifDetails.focalLength}</span>
                               </div>
                             )}
                             {result.exifDetails.iso && (
@@ -136,7 +136,7 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result }) => {
                                   <Aperture className="w-3 h-3" />
                                   <span>ISO</span>
                                 </div>
-                                <span className="text-white text-sm font-medium">{result.exifDetails.iso}</span>
+                                <span className="text-white text-sm font-medium break-words">{result.exifDetails.iso}</span>
                               </div>
                             )}
                           </div>
