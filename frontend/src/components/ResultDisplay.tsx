@@ -74,16 +74,16 @@ const ResultDisplay: React.FC<ResultDisplayProps> = ({ result }) => {
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: -20 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="w-full mt-8"
+      className="w-full mt-8 bg-[#020617]"
     >
-      <div className={`grid grid-cols-1 ${result.thumbnailUrl ? 'lg:grid-cols-2' : ''} gap-8 items-start`}>
+      <div className={`flex flex-col ${result.thumbnailUrl ? 'lg:flex-row' : ''} gap-8 items-start`}>
         {result.thumbnailUrl && (
-          <div className="sticky top-6 w-full bg-slate-900/50 rounded-xl border border-slate-700 p-2 flex justify-center">
-            <img src={result.thumbnailUrl} alt="Analyzed media" className="max-w-full max-h-[700px] object-contain rounded-lg shadow-sm" />
+          <div className="w-full lg:w-1/2 bg-slate-900/50 rounded-xl border border-slate-700 p-2 flex justify-center">
+            <img src={result.thumbnailUrl} alt="Analyzed media" className="w-full max-h-80 object-contain rounded-lg shadow-sm" />
           </div>
         )}
 
-        <div className="flex flex-col gap-6">
+        <div className={`flex flex-col gap-6 w-full ${result.thumbnailUrl ? 'lg:w-1/2' : ''}`}>
           <div className="bg-slate-800 border border-slate-700 rounded-3xl p-8 shadow-2xl">
             <div className="flex items-start gap-6">
               <div className={`p-4 rounded-2xl border ${badgeColor}`}>
