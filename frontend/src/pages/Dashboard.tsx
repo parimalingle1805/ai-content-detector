@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 md:px-10 py-8 md:py-16">
         <header className="mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Content Verification
+              Content Verification (v1)
             </h2>
             <p className="text-xl text-slate-400">
               Detect synthetic media using deep statistical analysis.

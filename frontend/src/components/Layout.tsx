@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {/* Mobile Top Navigation */}
         <div className="md:hidden flex items-center justify-between p-4 border-b border-slate-800 bg-slate-900 z-30">
           <h1 className="text-xl font-bold tracking-tight">
-            AI<span className="text-lime-400">Scanner v1</span>
+            AI<span className="text-lime-400">Scanner</span>
           </h1>
           <button 
             onClick={() => setSidebarOpen(true)}
