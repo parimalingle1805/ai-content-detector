@@ -23,7 +23,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             # Navigate to the project directory
-            cd ~/ai-content-detector
+            cd ~/AI_content_detect
             
             # Pull latest changes
             git pull origin main
@@ -31,6 +31,9 @@ jobs:
             # Install Node dependencies and regenerate Prisma schema
             npm install
             npx prisma generate
+            
+            # Compile TypeScript to JavaScript
+            npm run build
             
             # Restart Express API via PM2
             pm2 restart backend || pm2 start dist/server.js --name backend
