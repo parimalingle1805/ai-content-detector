@@ -39,8 +39,8 @@ jobs:
             # Compile TypeScript to JavaScript
             npm run build
             
-            # Restart Express API via PM2
-            pm2 restart backend || pm2 start dist/server.js --name backend
+            # Restart Express API via PM2 using the package.json script
+            pm2 restart backend || pm2 start npm --name backend -- run start
             
             # Rebuild and restart Docker containers in detached mode
             docker compose up --build -d
