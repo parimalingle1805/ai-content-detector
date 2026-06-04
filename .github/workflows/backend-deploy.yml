@@ -28,8 +28,9 @@ jobs:
             # Navigate to the exact repository folder name on the EC2 instance
             cd ~/ai-content-detector
             
-            # Pull latest changes
-            git pull origin main
+            # Force the server to perfectly mirror the GitHub main branch
+            git fetch --all
+            git reset --hard origin/main
             
             # Install Node dependencies and regenerate Prisma schema
             npm install
