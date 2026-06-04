@@ -43,4 +43,4 @@ jobs:
             pm2 restart backend || pm2 start npm --name backend -- run start
             
             # Rebuild and restart Docker containers in detached mode
-            docker compose up --build -d
+            docker-compose up --build -d
