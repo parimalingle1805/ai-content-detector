@@ -22,8 +22,11 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Navigate to the project directory
-            cd ~/AI_content_detect
+            # Tell bash to exit immediately if any command fails
+            set -e
+            
+            # Navigate to the exact repository folder name on the EC2 instance
+            cd ~/ai-content-detector
             
             # Pull latest changes
             git pull origin main
